@@ -1,0 +1,27 @@
+.elements {
+    display: grid;
+    row-gap: 20px;
+    column-gap: 18px;
+    grid-template-columns: repeat(3, 288px);
+    margin: 0 auto; 
+    padding: 0;
+}
+
+/* 1. скопировать код из предыдущей работы и сделать сначала мобильную версию а потом десктопную -- выровнять по центру карточки 
+почитать про закруглённость карточек и разобраться с скрытием части текста и многоточием ; расположить лайк и надпись как надо 
+всё тут переписать короче */
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .elements {
+        grid-template-columns: repeat(1, 288px);
+        margin: 0 19px;
+        column-gap: 0;
+    }
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 1100px) {
+    .elements {
+        grid-template-columns: repeat(2, 288px)
+    }
+}
