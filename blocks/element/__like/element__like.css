@@ -1,3 +1,5 @@
 .element__like {
     color: white;
+    width: 21px;
+    max-height: 18px;  
 }

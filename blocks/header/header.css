@@ -1,9 +1,18 @@
 @import url("./__logo/header__logo.css");
+@import url("./__line/header__line.css");
 
 .header {
-    width: 69%;
+    width: 70%;
     margin-top: 45px;
     margin-bottom: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
-/* переадаптивить */
+@media screen and (max-width: 767px) {
+    .header {
+        width: 100%;
+    }
+}

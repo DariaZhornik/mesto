@@ -1,0 +1,7 @@
+.popup__content {
+    display: flex;
+    align-items: space-between;
+    flex-direction: column;
+    width: 78%;
+    padding-bottom: 36px;
+}

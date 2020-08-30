@@ -3,19 +3,25 @@
 @import url("./__image/profile__image.css");
 @import url("./__subtitle/profile__subtitle.css");
 @import url("./__title/profile__title.css");
+@import url("./__info/profile__info.css");
+@import url("./__add-image/profile__add-image.css");
+@import url("./__edit-image/profile__edit-image.css");
+@import url("./__person/profile__person.css");
 
 .profile {
     display: flex;
     justify-content: space-between;
+    align-items: center; 
     margin-bottom: 51px;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 @media screen and (min-width: 0) and (max-width: 768px) {
     .profile {
         flex-direction: column;
+        width: 100%;
+        margin-bottom: 36px;
+        margin: 0 auto;
     }
 }
-
-/* 2. Опять сделать всё изначально под телефон. Разобраться с позиционированием всех элементов 
-3. закругление картинки?
- 4. везде навешивать джаваскрипт ... */

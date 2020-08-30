@@ -1,15 +1,15 @@
 @import url("./__image/element__image.css");
 @import url("./__like/element__like.css");
+@import url("./__text/element__text.css");
+@import url("./__title/element__title.css");
 
 .element {
     background-color: white;  
     color: black;  
-    max-width: 282px;
+    width: 100%;
     font-weight: 900;
     font-size: 24px;
     line-height: 29px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden; /* разобраться с переносами */
     margin: 0 auto;
-}
+    border-radius: 10px;
+    }
