@@ -1,8 +1,8 @@
-let popup = document.querySelector('.popup')
-let editBtn = document.querySelector('.profile__edit-btn')
-let addBtn = document.querySelector('.profile__add-btn')
-let closeBtn = document.querySelector('.popup__close')
-let saveBtn = document.querySelector('.popup__save')
+const popup = document.querySelector('.popup')
+const editBtn = document.querySelector('.profile__edit-btn')
+const addBtn = document.querySelector('.profile__add-btn')
+const closeBtn = document.querySelector('.popup__close')
+const saveBtn = document.querySelector('.popup__save')
 
 const popupToggle = function ()  {
     popup.classList.toggle('popup_is-opened')
@@ -25,10 +25,17 @@ closeBtn.addEventListener('click', popupToggle)
 saveBtn.addEventListener('click', popupToggle)
 popup.addEventListener('click', popupOverlayClose)
 
-let popupName = document.querySelector('.popup__name')
-let popupJob = document.querySelector('.popup__job')
-let profileName = document.querySelector('.profile__title')
-let profileJob = document.querySelector('.profile__subtitle')
+const popupForm = popup.querySelector('.popup__container')
+const popupName = popupForm.querySelector('.popup__name')
+const popupJob = popupForm.querySelector('.popup__job')
+const profileName = document.querySelector('.profile__title')
+const profileJob = document.querySelector('.profile__subtitle')
 
-popupName.textContent = 'l' 
-popupJob.textContent = 'j'
+function formSubmitHandler (evt) {
+    evt.preventDefault() 
+    profileName.textContent = popupName.value
+    profileJob.textContent = popupJob.value
+}
+
+popupForm.addEventListener('submit', formSubmitHandler)
+
