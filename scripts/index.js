@@ -12,12 +12,6 @@ function popupToggle () {
     popup.classList.toggle('popup_is-opened')
 }
 
-function formSubmitHandler (evt) {
-  evt.preventDefault() 
-  profileName.textContent = popupName.value
-  profileJob.textContent = popupJob.value
-}  
-
 function popupOverlayClose (event) {
   console.log({
     target: event.target,
@@ -30,8 +24,21 @@ function popupOverlayClose (event) {
   popupToggle(event)
 }
 
+function formSubmitHandler (evt) {
+  evt.preventDefault() 
+  profileName.textContent = popupName.value
+  profileJob.textContent = popupJob.value
+}  
+
+function formInfoFill (evt) {
+  evt.preventDefault() 
+  popupName.value = profileName.textContent
+  popupJob.value - profileJob.textContent
+}  
+
 editBtn.addEventListener('click', popupToggle)
 closeBtn.addEventListener('click', popupToggle)
 saveBtn.addEventListener('click', popupToggle)
 popup.addEventListener('click', popupOverlayClose)
+editBtn.addEventListener('click', formInfoFill)
 popupForm.addEventListener('submit', formSubmitHandler)
