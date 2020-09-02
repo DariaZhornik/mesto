@@ -6,6 +6,6 @@
     align-items: center;
     margin-top: 18px;
     margin-bottom: 32px;
-    width: 88%;
+    max-width: 246px;
     max-height: 80px;
 }

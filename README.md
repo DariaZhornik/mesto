@@ -2,8 +2,13 @@
 
 ### Обзор
 
+* Ссылка на проект
 * Содержание
 * Figma
+
+**Ссылка на проект**
+
+* [Ссылка на проект в GitHub Pages](https://dariazhornik.github.io/mesto/)
 
 **Figma**
 

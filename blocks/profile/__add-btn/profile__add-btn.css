@@ -2,15 +2,13 @@
     color: white;
     width: 150px;
     height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border: 2px solid white;
-    align-self: center;
     box-shadow: none;
     background: none;
     padding: 0;
-    width: 12%;
+    background-image: url("/images/profile__add.svg");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .profile__add-btn:hover {

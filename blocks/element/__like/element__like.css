@@ -1,5 +1,10 @@
 .element__like {
-    color: white;
+    color: black;
     width: 21px;
-    max-height: 18px;  
+    height: 21px;
+    background-image: url("/images/element__like.svg");
+    background-repeat: no-repeat;
+    background-position: center;  
+    background-color: white;
+    padding: 0;
 }
