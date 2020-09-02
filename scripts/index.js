@@ -33,7 +33,7 @@ function formSubmitHandler (evt) {
 function formInfoFill (evt) {
   evt.preventDefault() 
   popupName.value = profileName.textContent
-  popupJob.value - profileJob.textContent
+  popupJob.value = profileJob.textContent
 }  
 
 editBtn.addEventListener('click', popupToggle)
