@@ -14,7 +14,7 @@
     position: absolute;
     right: -45px;
     top: 47px;
-    background-image: url("./images/profile__edit.svg");
+    background-image: url("../../../images/profile__edit.svg");
     background-repeat: no-repeat;
     background-position: center;
 }
