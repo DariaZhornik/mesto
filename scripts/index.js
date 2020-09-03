@@ -1,7 +1,6 @@
 const popup = document.querySelector('.popup')
 const editBtn = document.querySelector('.profile__edit-btn')
 const closeBtn = document.querySelector('.popup__close')
-const saveBtn = document.querySelector('.popup__save')
 const popupForm = popup.querySelector('.popup__container')
 const popupName = popupForm.querySelector('.popup__text_name')
 const popupJob = popupForm.querySelector('.popup__text_job')
@@ -17,24 +16,24 @@ function popupOverlayClose (event) {
     return
   }
 
-  popupToggle(event)
+  popupToggle()
 }
 
 function formSubmitHandler (evt) {
   evt.preventDefault() 
   profileName.textContent = popupName.value
   profileJob.textContent = popupJob.value
+  popupToggle() 
 }     
 
 function formInfoFill (evt) {
   evt.preventDefault() 
   popupName.value = profileName.textContent
   popupJob.value = profileJob.textContent
-  popupToggle(evt) 
+  popupToggle() 
 }  
 
 closeBtn.addEventListener('click', popupToggle)
-saveBtn.addEventListener('click', popupToggle)
 popup.addEventListener('click', popupOverlayClose)
 editBtn.addEventListener('click', formInfoFill)
 popupForm.addEventListener('submit', formSubmitHandler)

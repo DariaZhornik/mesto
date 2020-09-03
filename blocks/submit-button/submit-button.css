@@ -1,9 +1,0 @@
-.submit-button {
-    cursor: pointer;
-    padding: 0;
-    box-shadow: none;
-}
-
-.submit-button:hover {
-    background: rgba(0, 0, 0, 0.8);
-}

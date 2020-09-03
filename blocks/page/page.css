@@ -2,6 +2,7 @@
     font-family: 'Inter', Arial, sans-serif;
     min-width: 320px;
     max-width: 882px;
+    width: calc(100% - 16px);
     margin: 0 auto;
     color: white;
     text-rendering: optimizeLegibility;
