@@ -9,14 +9,10 @@ const profileName = document.querySelector('.profile__title')
 const profileJob = document.querySelector('.profile__subtitle')
 
 function popupToggle () {
-    popup.classList.toggle('popup_is-opened')
+  popup.classList.toggle('popup_is-opened')
 }
 
 function popupOverlayClose (event) {
-  console.log({
-    target: event.target,
-    currentTarget: event.currentTarget,
-  })
   if (event.target !== event.currentTarget) {
     return
   }
@@ -28,15 +24,15 @@ function formSubmitHandler (evt) {
   evt.preventDefault() 
   profileName.textContent = popupName.value
   profileJob.textContent = popupJob.value
-}  
+}     
 
 function formInfoFill (evt) {
   evt.preventDefault() 
   popupName.value = profileName.textContent
   popupJob.value = profileJob.textContent
+  popupToggle(evt) 
 }  
 
-editBtn.addEventListener('click', popupToggle)
 closeBtn.addEventListener('click', popupToggle)
 saveBtn.addEventListener('click', popupToggle)
 popup.addEventListener('click', popupOverlayClose)

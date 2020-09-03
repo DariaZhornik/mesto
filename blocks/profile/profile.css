@@ -4,8 +4,6 @@
 @import url("./__subtitle/profile__subtitle.css");
 @import url("./__title/profile__title.css");
 @import url("./__info/profile__info.css");
-@import url("./__add-image/profile__add-image.css");
-@import url("./__edit-image/profile__edit-image.css");
 @import url("./__person/profile__person.css");
 
 .profile {
