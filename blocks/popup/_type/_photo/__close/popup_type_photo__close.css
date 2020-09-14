@@ -1,0 +1,11 @@
+.popup_type_photo__close {
+    position: absolute;
+    height: 47px;
+    right: 183px;
+    top: 40px;
+    border: none;
+    background-image: url("../../../../../images/popup__close.svg");
+    background-repeat: no-repeat;
+    background-position: center;  
+    width: 50px;
+}

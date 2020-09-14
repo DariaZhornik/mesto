@@ -22,49 +22,17 @@
       </div>
       <button class="button profile__add-btn" type="button"></button>
     </section>
-    <section class="elements">
-      <article class="element">
+    <section class="elements">   
+      <template class="element-template"> 
+      <div class="element">
         <img src="./images/karelia.jpg" alt="Карелия" class="element__image">
+        <button class="button element__delete" type="button"></button>
         <div class="element__text">
           <h2 class="element__title">Карелия</h2>
           <button class="button element__like" type="button"></button>
         </div>
-      </article>        
-      <article class="element">
-        <img src="./images/kamchatka.jpg" alt="Камчатка" class="element__image">
-        <div class="element__text">
-          <h2 class="element__title">Камчатка </h2>
-          <button class="button element__like" type="button"></button>
-        </div>
-      </article>
-      <article class="element">
-        <img src="./images/mordovia.jpg" alt="Мордовия" class="element__image">
-        <div class="element__text">
-          <h2 class="element__title">Мордовия</h2>
-          <button class="button element__like" type="button"></button>
-        </div>
-      </article>
-      <article class="element">
-        <img src="./images/mari-el.jpg" alt="Марий Эл" class="element__image">
-        <div class="element__text">
-          <h2 class="element__title">Марий Эл</h2>
-          <button class="button element__like" type="button"></button>
-        </div>
-      </article>
-      <article class="element">
-        <img src="./images/udmurtia.jpg" alt="Удмуртия" class="element__image">
-        <div class="element__text">
-          <h2 class="element__title">Удмуртия</h2>
-          <button class="button element__like" type="button"></button>
-        </div>
-      </article>
-      <article class="element">
-        <img src="./images/tatarstan.jpg" alt="Татарстан" class="element__image">
-        <div class="element__text">
-          <h2 class="element__title">Татарстан</h2>
-          <button class="button element__like" type="button"></button>
-        </div>
-      </article>
+      </div> 
+      </template>   
     </section>
   </main>
   <footer class="footer">
@@ -79,6 +47,24 @@
         <input type="text" value="" class="popup__text popup__text_job">
         <button class="popup__save button" type="submit">Сохранить</button>
       </form>
+    </div>
+  </div>
+  <div class="popup popup-add">
+    <div class="popup__container">
+      <button class="button popup__close" type="button"></button>
+      <form class="popup__content">
+        <h2 class="popup__title">Новое место</h2>
+        <input type="text" value="Название" class="popup__text popup__text_title">
+        <input type="text" value="Ссылка на картинку" class="popup__text popup__text_link">
+        <button class="popup__save button" type="submit">Создать</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_photo">
+    <div class="popup_type_photo__container">
+        <img src="./images/karelia.jpg" alt="Карелия" class="popup_type_photo__image">
+        <button class="button popup_type_photo__close" type="button"></button>
+        <h2 class="popup_type_photo__title">Карелия</h2>
     </div>
   </div>
   <script src="./scripts/index.js" defer></script>

@@ -2,6 +2,7 @@
 @import url("./__like/element__like.css");
 @import url("./__text/element__text.css");
 @import url("./__title/element__title.css");
+@import url("./__delete/element__delete.css");
 
 .element {
     background-color: white;  
@@ -13,4 +14,5 @@
     margin: 0 auto;
     border-radius: 10px;
     overflow: hidden;
+    position: relative;
     }
