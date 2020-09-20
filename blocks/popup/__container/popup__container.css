@@ -1,3 +1,5 @@
+@import url("./_type_photo/popup__container_type_photo.css");
+
 .popup__container {
     max-width: 430px;
     width: 100%;
