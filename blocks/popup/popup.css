@@ -15,7 +15,8 @@
     left: 0;
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s, opacity 0.5s linear;
+    display: flex;
+    transition: visibility 1s, opacity 0.5s linear;
     justify-content: center;
     align-items: center; 
     font-family: 'Inter', Arial, sans-serif;

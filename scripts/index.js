@@ -79,7 +79,7 @@ addPopupClose.addEventListener('click', function () {
   const addPopup = document.querySelector('.popup_type_add');
   closePopup(addPopup);
 })
-createBtn.addEventListener('click', createCard);
+createBtn.addEventListener('submit', createCard);
 editBtn.addEventListener('click', formInfoFill);
 popupForm.addEventListener('submit', formSubmitHandler);
 photoPopupClose.addEventListener('click', function () {
