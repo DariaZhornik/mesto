@@ -1,0 +1,4 @@
+.popup__error_active {
+    color: red;
+    border-top: 1px solid red;
+}

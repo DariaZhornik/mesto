@@ -31,10 +31,12 @@
   <div class="popup popup_type_edit">
     <div class="popup__container">
       <button class="button popup__close" type="button"></button>
-      <form class="popup__content">
+      <form class="popup__content" name="edit" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="text" class="popup__text popup__text_name">
-        <input type="text" class="popup__text popup__text_job">
+        <input type="text" required class="popup__text popup__text_name" id="person-name" minlength="2" maxlength="40">
+        <span class="popup__error" id="person-name-error"></span>
+        <input type="text" required class="popup__text popup__text_job" id="person-job" minlength="2" maxlength="200">
+        <span class="popup__error" id="person-job-error"></span>
         <button class="popup__save button" type="submit">Сохранить</button>
       </form>
     </div>
@@ -42,10 +44,12 @@
   <div class="popup popup_type_add">
     <div class="popup__container">
       <button class="button popup__close" type="button"></button>
-      <form class="popup__content">
+      <form class="popup__content" name="add" novalidate> 
         <h2 class="popup__title">Новое место</h2>
-        <input type="text" required placeholder="Название" class="popup__text popup__text_title">
-        <input type="url" required placeholder="Ссылка на картинку" class="popup__text popup__text_link">
+        <input type="text" required placeholder="Название" class="popup__text popup__text_title" id="place-name" minlength="2" maxlength="30">
+        <span class="popup__error" id="place-name-error"></span>
+        <input type="url" required placeholder="Ссылка на картинку" class="popup__text popup__text_link" id="place-link">
+        <span class="popup__error" id="place-link-error"></span>
         <button class="popup__save button" type="submit">Создать</button>
       </form>
     </div>
@@ -68,5 +72,6 @@
     </div> 
     </template>  
   <script src="./scripts/index.js" defer></script>
+  <script src="./scripts/validate.js" defer></script>
 </body>
 </html>

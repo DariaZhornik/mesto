@@ -46,6 +46,8 @@ const initialCards = [
   }
 ];
 
+// ======== функции закрытия и открытия попапов ========= //
+
 function closePopup (popup) {
   popup.classList.remove('popup_is-opened');
 }
@@ -53,6 +55,15 @@ function closePopup (popup) {
 function openPopup (popup) {
   popup.classList.add('popup_is-opened');
 }
+
+function popupOverlayClose (popup) {
+  if (event.target !== event.currentTarget) {
+    return
+  }
+  closePopup(popup);
+}
+
+// ===== функции для окна редактирования профиля  ====== //
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
@@ -66,6 +77,8 @@ function formInfoFill (evt) {
   popupJob.value = profileJob.textContent;
   openPopup(editPopup); 
 }  
+
+// ========= добавление обработчиков событий ========== //
 
 closeBtn.addEventListener('click', function () {
   const editPopup = document.querySelector('.popup_type_edit');
@@ -85,6 +98,32 @@ popupForm.addEventListener('submit', formSubmitHandler);
 photoPopupClose.addEventListener('click', function () {
   closePopup(photoPopup);
 })
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 27) {
+    closePopup(editPopup);
+  } 
+});
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 27) {
+    closePopup(addPopup);
+  } 
+});
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 27) {
+    closePopup(photoPopup);
+  } 
+});
+editPopup.addEventListener('click', function () {
+  popupOverlayClose(editPopup);
+});
+addPopup.addEventListener('click', function () {
+  popupOverlayClose(addPopup);
+});
+photoPopup.addEventListener('click', function () {
+  popupOverlayClose(photoPopup);
+});
+
+// ========= создание галереи карточек ========== //
 
 function render() {
   initialCards.forEach(card => renderItem(card));
