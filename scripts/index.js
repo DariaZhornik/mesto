@@ -51,20 +51,12 @@ const initialCards = [
 
 function closePopup (popup) {
   popup.classList.remove('popup_is-opened');
-  document.removeEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      closePopup(popup);
-    } 
-  });
+  document.removeEventListener('keydown', handleEscDown);
 }
 
 function openPopup (popup) {
   popup.classList.add('popup_is-opened');
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      closePopup(popup);
-    } 
-  });
+  document.addEventListener('keydown', handleEscDown);
 }
 
 function closePopupOverlay (popup) {
@@ -73,6 +65,14 @@ function closePopupOverlay (popup) {
   }
   closePopup(popup);
 }
+
+const handleEscDown = (evt) => {
+  evt.preventDefault();
+  const activePopup = document.querySelector('.popup_is-opened');
+  if (evt.keyCode === ESC_KEYCODE) {
+  activePopup.classList.remove('popup_is-opened');
+  }
+}; 
 
 // ===== функции для окна редактирования профиля  ====== //
 
@@ -106,7 +106,7 @@ function getCardElement(name, link) {
   elementImage.addEventListener('click', () => {
     openPhotoPopup(name, link);
   });
-  prependCard(cardElement);
+  return cardElement;
 }
 
 function handleDeleteCard (evt) {
@@ -128,10 +128,7 @@ function renderItem(card) {
   const nameCard = card.name;
   const linkCard = card.link;
   getCardElement(nameCard, linkCard);
-}
-
-function prependCard (card) {
-  elementsContainer.prepend(card);
+  elementsContainer.prepend(getCardElement(nameCard, linkCard));
 }
 
 render();
@@ -139,23 +136,22 @@ render();
 function createCard () {
   event.preventDefault();
   getCardElement(cardName.value, cardLink.value); 
+  elementsContainer.prepend(getCardElement(cardName.value, cardLink.value));
   closePopup(addPopup);
+  elementsContainer.prepend(getCardElement(nameCard, linkCard));
 }
 
 // ========= добавление обработчиков событий ========== //
 
 closeBtn.addEventListener('click', function () {
-  const editPopup = document.querySelector('.popup_type_edit');
   closePopup(editPopup);
-})
+});
 addBtn.addEventListener('click', function () {
-  const addPopup = document.querySelector('.popup_type_add');
   openPopup(addPopup);
-})
+});
 addPopupClose.addEventListener('click', function () {
-  const addPopup = document.querySelector('.popup_type_add');
   closePopup(addPopup);
-})
+});
 addPopup.addEventListener('submit', createCard);
 editBtn.addEventListener('click', fillFormInfo);
 popupEditForm.addEventListener('submit', formSubmitHandler);
