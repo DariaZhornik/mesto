@@ -47,15 +47,8 @@ const setEventListeners = (formElement, inputSelector, submitButtonSelector) => 
     });
 };
 
-const enableValidation = ({
-    formSelector: '.popup__content',
-    inputSelector: '.popup__text',
-    submitButtonSelector: '.popup__save',
-    inactiveButtonClass: 'popup__save_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_active'
-}) => {
-    const formList = Array.from(document.querySelectorAll(formSelector));
+const enableValidation = (formSelector) => {
+    const formList = Array.from(document.querySelectorAll('.popup__content'));
     formList.forEach(formElement => {
         formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
@@ -65,4 +58,11 @@ const enableValidation = ({
     });
 };
 
-enableValidation();
+enableValidation({
+    formSelector: '.popup__content',
+    inputSelector: '.popup__text',
+    submitButtonSelector: '.popup__save',
+    inactiveButtonClass: 'popup__save_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_active'
+});
