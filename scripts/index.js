@@ -67,7 +67,6 @@ function closePopupOverlay (popup) {
 }
 
 const handleEscDown = (evt) => {
-  evt.preventDefault();
   const activePopup = document.querySelector('.popup_is-opened');
   if (evt.keyCode === ESC_KEYCODE) {
   activePopup.classList.remove('popup_is-opened');
@@ -127,18 +126,17 @@ function openPhotoPopup (name, link) {
 function renderItem(card) {
   const nameCard = card.name;
   const linkCard = card.link;
-  getCardElement(nameCard, linkCard);
-  elementsContainer.prepend(getCardElement(nameCard, linkCard));
+  const getCard = getCardElement(nameCard, linkCard);
+  elementsContainer.prepend(getCard);
 }
 
 render();
 
 function createCard () {
   event.preventDefault();
-  getCardElement(cardName.value, cardLink.value); 
-  elementsContainer.prepend(getCardElement(cardName.value, cardLink.value));
+  const getNewCard = getCardElement(cardName.value, cardLink.value); 
+  elementsContainer.prepend(getNewCard);
   closePopup(addPopup);
-  elementsContainer.prepend(getCardElement(nameCard, linkCard));
 }
 
 // ========= добавление обработчиков событий ========== //
