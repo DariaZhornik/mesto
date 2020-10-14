@@ -121,9 +121,10 @@ const addCard = (event)=>{
   const card = new Card(formObject, config.itemTemplate, prependCard);
   const element = card.getElement();
   prependCard(element);
+  closePopup(addPopup);
 }
 
-config.form.addEventListener('submit', addCard);
+config.form.addEventListener('submit', addCard);  
 
 // ========= валидация ================================ //
 
