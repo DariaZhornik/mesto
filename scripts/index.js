@@ -1,3 +1,5 @@
+import Card from './Card.js'
+import FormValidator from './FormValidator.js' 
 const editPopup = document.querySelector('.popup_type_edit')
 const addPopup = document.querySelector('.popup_type_add')
 const addBtn = document.querySelector('.profile__add-btn')
@@ -91,17 +93,12 @@ function fillFormInfo (evt) {
 
 // ========= создание галереи карточек ========== //
 
-import Card from './Card.js'
 
 const config = {
   itemTemplate: ".element-template",
   list: document.querySelector(".elements"),
   formSelector: document.querySelector(".popup__content"),
   form: document.querySelector(".popup__content_add"),
-  formObject: {
-    name: document.querySelector(".popup__text_title").value,
-    link: document.querySelector(".popup__text_link").value
-  }
 }
 
 const prependCard = (element) =>{
@@ -117,7 +114,11 @@ initialCards.forEach((item)=>{
 
 const addCard = (event)=>{
   event.preventDefault();
-  const card = new Card(config.formObject, config.itemTemplate, prependCard);
+  const formObject = {
+    name: cardName.value, 
+    link: cardLink.value
+  }
+  const card = new Card(formObject, config.itemTemplate, prependCard);
   const element = card.getElement();
   prependCard(element);
 }
@@ -125,8 +126,6 @@ const addCard = (event)=>{
 config.form.addEventListener('submit', addCard);
 
 // ========= валидация ================================ //
-
-import FormValidator from './FormValidator.js' 
 
 const params = {
   formSelector: '.popup__content_edit',
@@ -148,10 +147,10 @@ const paramsAdd = {
   errorClass: 'popup__error_active'
 }
 
-const formEditValidator = new FormValidator(params.formSelector, params);
+const formEditValidator = new FormValidator(params, params.formElement);
 formEditValidator.enableValidation();
 
-const formAddValidator = new FormValidator(paramsAdd.formSelector, paramsAdd);
+const formAddValidator = new FormValidator(paramsAdd, paramsAdd.formSelector);
 formAddValidator.enableValidation();
 
 // ========= добавление обработчиков событий ========== //
