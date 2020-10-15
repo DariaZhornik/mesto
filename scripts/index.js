@@ -62,7 +62,7 @@ export function openPopup (popup) {
   document.addEventListener('keydown', handleEscDown);
 }
 
-function closePopupOverlay (popup) {
+function closePopupOverlay (popup, event) {
   if (event.target !== event.currentTarget) {
     return
   }
@@ -97,7 +97,6 @@ function fillFormInfo (evt) {
 const config = {
   itemTemplate: ".element-template",
   list: document.querySelector(".elements"),
-  formSelector: document.querySelector(".popup__content"),
   form: document.querySelector(".popup__content_add"),
 }
 
@@ -106,7 +105,7 @@ const prependCard = (element) =>{
 }
 
 initialCards.forEach((item)=>{
-  const card = new Card(item, config.itemTemplate, prependCard);
+  const card = new Card(item, config.itemTemplate);
   const element = card.getElement();
   config.list.append(element);
 })  
@@ -114,11 +113,11 @@ initialCards.forEach((item)=>{
 
 const addCard = (event)=>{
   event.preventDefault();
-  const formObject = {
+  const cardData = {
     name: cardName.value, 
     link: cardLink.value
   }
-  const card = new Card(formObject, config.itemTemplate, prependCard);
+  const card = new Card(cardData, config.itemTemplate, prependCard);
   const element = card.getElement();
   prependCard(element);
   closePopup(addPopup);
@@ -151,7 +150,7 @@ const paramsAdd = {
 const formEditValidator = new FormValidator(params, params.formElement);
 formEditValidator.enableValidation();
 
-const formAddValidator = new FormValidator(paramsAdd, paramsAdd.formSelector);
+const formAddValidator = new FormValidator(paramsAdd, paramsAdd.formElement);
 formAddValidator.enableValidation();
 
 // ========= добавление обработчиков событий ========== //
@@ -171,11 +170,11 @@ photoPopupClose.addEventListener('click', function () {
   closePopup(photoPopup);
 });
 editPopup.addEventListener('click', function () {
-  closePopupOverlay(editPopup);
+  closePopupOverlay(editPopup, event);
 });
 addPopup.addEventListener('click', function () {
-  closePopupOverlay(addPopup);
+  closePopupOverlay(addPopup, event);
 });
 photoPopup.addEventListener('click', function () {
-  closePopupOverlay(photoPopup);
+  closePopupOverlay(photoPopup, event);
 });

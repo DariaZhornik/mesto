@@ -1,6 +1,6 @@
 class FormValidator {
     constructor(params, formElement){
-      this._formElement = params.formElement;
+      this._formElement = formElement;
       this._inputSelector = params.inputSelector;
       this._submitButtonSelector = params.submitButtonSelector;
       this._inactiveButtonClass = params.inactiveButtonClass;
