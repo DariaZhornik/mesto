@@ -63,7 +63,7 @@ class FormValidator {
     };
 
     enableValidation() {
-        submitFormHandler = function(event) {
+        const submitFormHandler = (event) => {
           event.preventDefault();
         };
         this._formElement.addEventListener("submit", submitFormHandler);

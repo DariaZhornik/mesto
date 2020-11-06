@@ -46,12 +46,15 @@ const initialCards = [
 function handleCardClick(name, link){
   imagePopup.open(name, link);
 }
+const createCard = (name, link) => {
+  const card = new Card(name, link, handleCardClick, '.element-template');
+  return card;
+}
 
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item.name, item.link, handleCardClick, '.element-template');
-    cardList.addItem(card.getElement());
+    cardList.addItem(createCard(item.name, item.link).getElement());
   } 
 }, '.elements')
 cardList.renderItems();
@@ -70,14 +73,13 @@ const popupWithFormAdd = new PopupWithForm({
   popupSelector: '.popup_type_add',
   formSelector: '.popup__content_add',
   handleFormSubmit: (item) => {
-    const card = new Card(item["place-name" ], item["place-link"], handleCardClick, '.element-template');
-    console.log(card.getElement())
-    cardList.addItem(card.getElement(), true);
+    cardList.addItem(createCard(item["place-name"], item["place-link"]).getElement(), true);
   }
 })
 popupWithFormAdd.setEventListeners();
 addBtn.addEventListener('click', () => {
   popupWithFormAdd.open();
+  document.querySelector('.popup__submit').setAttribute("disabled", true);
 });
 
 // ================================================================== форма для редактирования информации профиля
@@ -106,7 +108,6 @@ editBtn.addEventListener('click', () => {
 
 const params = {
   formSelector: '.popup__content_edit',
-  formElement: document.querySelector('.popup__content_edit'),
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save',
   inactiveButtonClass: 'popup__save_disabled',
@@ -114,18 +115,8 @@ const params = {
   errorClass: 'popup__error_active'
 }
 
-const paramsAdd = {
-  formSelector: '.popup__content_add',
-  formElement: document.querySelector('.popup__content_add'),
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
-  inactiveButtonClass: 'popup__save_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_active'
-}
-
-const formEditValidator = new FormValidator(params, params.formElement);
+const formEditValidator = new FormValidator(params, document.querySelector('.popup__content_add'));
 formEditValidator.enableValidation();
 
-const formAddValidator = new FormValidator(paramsAdd, paramsAdd.formElement);
+const formAddValidator = new FormValidator(params, document.querySelector('.popup__content_edit'));
 formAddValidator.enableValidation();
