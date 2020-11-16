@@ -12,7 +12,9 @@
   <main class="content">
     <section class="profile">
       <div class="profile__person">
-        <img src="./images/Jacques.jpg" alt="Жак-Ив Кусто" class="profile__image">
+        <div class="profile__image-wrap">
+          <img src="./images/Jacques.jpg" alt="Жак-Ив Кусто" class="profile__image">
+        </div>
           <div class="profile__info">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
             <p class="profile__subtitle">Исследователь океана</p>
@@ -32,9 +34,9 @@
       <button class="button popup__close" type="button"></button>
       <form class="popup__content popup__content_edit form" name="edit" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input name="person-name" type="text" required class="popup__input popup__text_name" id="person-name" minlength="2" maxlength="40">
+        <input name="name" type="text" required class="popup__input popup__text_name" id="person-name" minlength="2" maxlength="40">
         <span class="popup__error" id="person-name-error"></span>
-        <input name="person-job" type="text" required class="popup__input popup__text_job" id="person-job" minlength="2" maxlength="200">
+        <input name="about" type="text" required class="popup__input popup__text_job" id="person-job" minlength="2" maxlength="200">
         <span class="popup__error" id="person-job-error"></span>
         <button class="popup__save button" type="submit">Сохранить</button>
       </form>
@@ -53,6 +55,26 @@
       </form>
     </div>
   </div>
+  <div class="popup popup_type_edit-photo">
+    <div class="popup__container">
+      <button class="button popup__close" type="button"></button>
+      <form class="popup__content popup__content_avatar form" name="add" novalidate> 
+        <h2 class="popup__title">Обновить аватар</h2>
+        <input name="avatar" type="url" required placeholder="Ссылка на фотографию" class="popup__input popup__text_link" id="place-link">
+        <span class="popup__error" id="place-link-error"></span>
+        <button class="popup__save popup__submit button" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_delete">
+    <div class="popup__container popup__container_type_delete">
+      <button class="button popup__close" type="button"></button>
+      <form class="popup__content popup__content_delete form" name="add" novalidate> 
+        <h2 class="popup__title popup__title_type_delete">Вы уверены?</h2>
+        <button class="popup__save popup__delete popup__submit button" type="submit">Да</button>
+      </form>
+    </div>
+  </div>
   <div class="popup popup_type_photo">
     <div class="popup__container_type_photo">
         <img src="./images/karelia.jpg" alt="Карелия" class="popup__image_type_photo">
@@ -66,7 +88,10 @@
       <button class="button element__delete" type="button"></button>
       <div class="element__text">
         <h2 class="element__title">Карелия</h2>
-        <button class="button element__like" type="button"></button>
+        <div class="element__like-container">
+          <button class="button element__like" type="button"></button>
+          <p class="element__like-count">6</p>
+        </div>
       </div>
     </div> 
     </template>  

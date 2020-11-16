@@ -4,6 +4,7 @@
     background-position: center;  
     border: none;
     position: absolute;
+    display: none;
     height: 16px;
     width: 16px;
     top: 18px;
