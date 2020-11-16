@@ -65,10 +65,10 @@ api.getInitialCards()
   .then((result) => { 
   result.forEach(item => {
     const card = createCard(item);
-    cardList.addItem(card.getElement());
+    cardList.addItem(card.getElement())
   })
-  .catch(() => console.error('Ошибка'));  
 })
+.catch(() => console.error('Ошибка'));  
 
 
 function handleCardClick(name, link){
