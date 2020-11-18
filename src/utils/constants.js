@@ -16,6 +16,7 @@ export const popupChangeForm = document.querySelector('.popup__content_avatar')
 export const elementSelector = '.element-template';
 export const editPopup = document.querySelector('.popup_type_edit')
 export const addPopup = document.querySelector('.popup_type_add')
+export const avatarPopup = document.querySelector('.popup_type_edit-photo')
 export const addBtn = document.querySelector('.profile__add-btn')
 export const editBtn = document.querySelector('.profile__edit-btn')
 export const addPopupClose = addPopup.querySelector('.popup__close')

@@ -1,12 +1,12 @@
-import { deletePopup } from '../pages/index.js'
+import { setSubmitCallback } from '../utils/utils.js';
 
 export default class Card {
-    constructor(name, link, cardId, ownerId, userId, likes, handleCardClick, handleDeleteCard, removeLikeFunction, addLikeFunction, selector) {
+    constructor(name, link, cardId, ownerId, likes, userId, handleCardClick, setSubmitCallback, removeLikeFunction, addLikeFunction, selector) {
         this._selector = selector;
 	    this._name = name;
         this._link = link;
         this._handleCardClick = handleCardClick;
-        this._handleDeleteCard = handleDeleteCard;
+        this._setSubmitCallback = setSubmitCallback;
         this._addLikeFunction = addLikeFunction;
         this._removeLikeFunction = removeLikeFunction;
         this._cardId = cardId;
@@ -34,7 +34,7 @@ export default class Card {
         if (this._checkId()) {
             this._element.querySelector('.element__delete').classList.add('element__delete_visible');
             this._element.querySelector('.element__delete').addEventListener('click', ()=>
-            deletePopup.open(this._cardId, this._element));
+            setSubmitCallback(this._cardId, this._element));
         }
         this._image.addEventListener('click', ()=>this._handleCardClick(this._name, this._link));
     }

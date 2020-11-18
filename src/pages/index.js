@@ -5,8 +5,11 @@ import PopupWithForm from '../scripts/PopupWithForm.js'
 import PopupWithImage from '../scripts/PopupWithImage.js'
 import Section from '../scripts/Section.js'
 import UserInfo from '../scripts/UserInfo.js'
-import PopupConfirmation from '../scripts/PopupConfirmation';
+import {addPopup} from '../utils/constants.js'
+import {avatarPopup} from '../utils/constants.js'
+import {editPopup} from '../utils/constants.js'
 import {ownerInfo} from '../utils/config.js'
+import Popup from '../scripts/Popup.js'
 import { validationParams } from '../utils/constants.js'
 import { popupAddForm } from '../utils/constants.js'
 import { popupEditForm } from '../utils/constants.js'
@@ -18,9 +21,28 @@ import { profilePhoto } from '../utils/constants.js'
 import { changeButtonValue, setSubmitCallback } from '../utils/utils.js'
 import {api} from '../utils/constants.js'
 
+
+Promise.all([
+  api.getInitialCards(),
+  api.getUserInfo(),
+])
+  .then(([initialCards, userData]) => {
+    initialCards.forEach(item => {
+    const card = createCard(item, userData);
+    cardList.addItem(card.getElement())
+    });
+    ownerInfo.id = userData._id; 
+    userInfo.setUserInfo(userData)})
+  .catch(() => console.error('Ошибка'));
+
+
+const photoInputs = avatarPopup.querySelectorAll('.popup__input');
 profilePhoto.addEventListener('click', () => openEditPhotoPopup());
 function openEditPhotoPopup(){
-  editPhotoPopup.open()
+  photoInputs.forEach(input => {
+    formChangeValidator.hideInputError(input)
+  })
+  editPhotoPopup.open();
 }
  
 function removeLikeFunction(id){
@@ -42,31 +64,20 @@ function addLikeFunction(id){
 
 // ============================================================= рендер карточек
 
-api.getInitialCards()
-  .then((result) => { 
-  result.forEach(item => {
-    const card = createCard(item);
-    cardList.addItem(card.getElement())
-  })
-})
-.catch(() => console.error('Ошибка'));  
-
-
 function handleCardClick(name, link){
   imagePopup.open(name, link);
 }
 
-
-const createCard = (object)  => {
+const createCard = (object, userData)  => {
   const card = new Card(
     object.name,
     object.link,
     object._id,
     object.owner._id,
-    ownerInfo.id, 
     object.likes,
+    userData._id, 
     handleCardClick, 
-    handleDeleteCard,
+    setSubmitCallback,
     removeLikeFunction, 
     addLikeFunction,
     elementSelector);
@@ -102,20 +113,21 @@ const popupWithFormAdd = new PopupWithForm({
       .finally(() => changeButtonValue('.popup__content_add', 'Создать'));
   }
 })
+
+const addInputs = addPopup.querySelectorAll('.popup__input');
+
+
 popupWithFormAdd.setEventListeners();
+
 addBtn.addEventListener('click', () => {
+  addInputs.forEach(input => {
+    formAddValidator.hideInputError(input)
+  })
   popupWithFormAdd.open();
   document.querySelector('.popup__submit').setAttribute("disabled", true);
 });
 
 // ================================================================== форма для редактирования информации профиля
-
-api.getUserInfo()
-  .then(result => {  
-    userInfo.setUserInfo(result);
-  })
-  .catch(() => console.error('Ошибка'));
-
 
 const userInfoForm = new PopupWithForm({
   popupSelector: '.popup_type_edit',
@@ -136,8 +148,13 @@ const userInfo = new UserInfo({
   avatar: document.querySelector('.profile__image')
 })
 
+
+const userInfoInputs = editPopup.querySelectorAll('.popup__input')
 userInfoForm.setEventListeners();
 editBtn.addEventListener('click', () => {
+  userInfoInputs.forEach(input => {
+    formEditValidator.hideInputError(input)
+  })
   userInfoForm.open();
   document.querySelector('.popup__text_name').value = userInfo.getUserInfo().name;
   document.querySelector('.popup__text_job').value = userInfo.getUserInfo().description;
@@ -145,25 +162,8 @@ editBtn.addEventListener('click', () => {
 
 // ===================================================== попап удаления 
 
-export const deletePopup = new PopupConfirmation('.popup_type_delete', setSubmitCallback);
-
+export const deletePopup = new Popup('.popup_type_delete');
 deletePopup.setEventListeners();
-
-function handleDeleteCard() {
-  this._element.querySelector('.element__delete').addEventListener('click', ()=>
-  deletePopup.open(this._cardId, this._element));
-}
-
-// open(id, card){
-//   super.open();
-//   this._id = id;
-//   this._card = card; 
-// }
-
-// _deleteHandler(){
-//   this._element.remove();
-//   this._element = null;
-// }
 
 // ===================================================== попап редактирования аватара
 
@@ -183,10 +183,10 @@ editPhotoPopup.setEventListeners();
 
 // ========= валидация ================================ //
 
-const formEditValidator = new FormValidator(validationParams, popupAddForm);
+const formEditValidator = new FormValidator(validationParams, popupEditForm);
 formEditValidator.enableValidation();
 
-const formAddValidator = new FormValidator(validationParams, popupEditForm);
+const formAddValidator = new FormValidator(validationParams, popupAddForm);
 formAddValidator.enableValidation();
 
 const formChangeValidator = new FormValidator(validationParams, popupChangeForm);
