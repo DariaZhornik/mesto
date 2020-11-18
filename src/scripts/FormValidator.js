@@ -20,17 +20,23 @@ class FormValidator {
         errorElement.classList.remove(this._errorClass);
     };
 
+    // resetForm() {
+    //   errorElement.textContent = "";
+    //   buttonElement.classList.add(this._inactiveButtonClass);
+    //   buttonElement.setAttribute("disabled", true);
+    // }
+
     _getErrorMessage(inputElement){
     return inputElement.validationMessage;
     };
 
     _checkInputValidity(inputElement) {
         const isInputNotValid = !inputElement.validity.valid;
-        
         if (isInputNotValid) {
             const errorMessage = this._getErrorMessage(inputElement);
             this._showInputError(inputElement, errorMessage);
-        } else {
+        } 
+        else {
           this._hideInputError(inputElement);
         }
     };

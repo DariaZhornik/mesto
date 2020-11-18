@@ -9,8 +9,8 @@ export default class Popup {
         this._element.classList.add('popup_is-opened');
         document.addEventListener('keyup', this._handleEscClose);
         this._element.addEventListener('click', this._closePopupOverlay);
-      
     }
+
 
     close(){
         this._element.classList.remove('popup_is-opened');

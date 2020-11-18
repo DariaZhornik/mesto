@@ -1,5 +1,4 @@
 import Popup from './Popup.js'
-import { changeButtonValue } from './index.js'
 export default class PopupWithForm extends Popup {
     constructor({popupSelector, formSelector, handleFormSubmit}) {
         super(popupSelector);
@@ -23,7 +22,6 @@ export default class PopupWithForm extends Popup {
         });
         this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            changeButtonValue(this._formSelector, 'Сохранение...');
             this._handleFormSubmit(this._getInputValue());   
             this.close();
         });

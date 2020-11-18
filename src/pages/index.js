@@ -1,38 +1,28 @@
 import '../pages/index.css';
-import Card from './Card.js'
-import FormValidator from './FormValidator.js' 
-import PopupWithForm from './PopupWithForm.js'
-import PopupWithImage from './PopupWithImage.js'
-import Section from './Section.js'
-import UserInfo from './UserInfo.js'
-import { Api, ownerInfo } from './Api.js'
-import PopupConfirmation from './PopupConfirmation';
-export const editPopup = document.querySelector('.popup_type_edit')
-export const addPopup = document.querySelector('.popup_type_add')
-export const addBtn = document.querySelector('.profile__add-btn')
-export const editBtn = document.querySelector('.profile__edit-btn')
-export const addPopupClose = addPopup.querySelector('.popup__close')
-export const photoPopup = document.querySelector('.popup_type_photo');
-export const photoPopupImage = photoPopup.querySelector(".popup__image_type_photo")
-export const photoPopupTitle = photoPopup.querySelector(".popup__title_type_photo")
-const profilePhoto = document.querySelector('.profile__image-wrap')
-
+import Card from '../scripts/Card.js'
+import FormValidator from '../scripts/FormValidator.js' 
+import PopupWithForm from '../scripts/PopupWithForm.js'
+import PopupWithImage from '../scripts/PopupWithImage.js'
+import Section from '../scripts/Section.js'
+import UserInfo from '../scripts/UserInfo.js'
+import PopupConfirmation from '../scripts/PopupConfirmation';
+import {ownerInfo} from '../utils/config.js'
+import { validationParams } from '../utils/constants.js'
+import { popupAddForm } from '../utils/constants.js'
+import { popupEditForm } from '../utils/constants.js'
+import { popupChangeForm } from '../utils/constants.js'
+import { elementSelector } from '../utils/constants.js'
+import { addBtn } from '../utils/constants.js'
+import { editBtn } from '../utils/constants.js'
+import { profilePhoto } from '../utils/constants.js'
+import { changeButtonValue, setSubmitCallback } from '../utils/utils.js'
+import {api} from '../utils/constants.js'
 
 profilePhoto.addEventListener('click', () => openEditPhotoPopup());
-
 function openEditPhotoPopup(){
   editPhotoPopup.open()
 }
-
-function setSubmitCallback(id, element){
-  api.deleteCard(id)
-      .then(() => {
-          element.remove();
-          this.close();
-      })
-      .catch(() => console.error('Ошибка'));
-}
-
+ 
 function removeLikeFunction(id){
   api.removeLike(id)
     .then((data) => {
@@ -48,15 +38,6 @@ function addLikeFunction(id){
   })
   .catch(() => console.error('Ошибка'));    
 }
-
-export function changeButtonValue(formSelector, text){
-  document.querySelector(formSelector).querySelector('.popup__save').textContent = text;
-}
-
-
-// ============================================================ api
-
-const api = new Api(ownerInfo);
 
 
 // ============================================================= рендер карточек
@@ -85,9 +66,10 @@ const createCard = (object)  => {
     ownerInfo.id, 
     object.likes,
     handleCardClick, 
+    handleDeleteCard,
     removeLikeFunction, 
     addLikeFunction,
-    '.element-template');
+    elementSelector);
   return card;
 }
 
@@ -111,6 +93,7 @@ const popupWithFormAdd = new PopupWithForm({
   popupSelector: '.popup_type_add',
   formSelector: '.popup__content_add',
   handleFormSubmit: (item) => {
+    changeButtonValue('.popup__content_add', 'Сохранение...')
     api.addNewCard(item["place-name"], item["place-link"])
       .then(result => {
         cardList.addItem(createCard(result).getElement(), true);
@@ -138,11 +121,12 @@ const userInfoForm = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   formSelector: '.popup__content_edit',
   handleFormSubmit: (item) => {
+    changeButtonValue('.popup__content_edit', 'Сохранение...')
     api.changeUserInfo(item)
       .then(result =>
     userInfo.setUserInfo(result))
-        .finally(() => changeButtonValue('.popup__content_edit', 'Сохранить'))
-        .catch(() => console.error('Ошибка'));
+        .catch(() => console.error('Ошибка'))
+        .finally(() => changeButtonValue('.popup__content_edit', 'Сохранить'));
   }
 })
 
@@ -165,12 +149,29 @@ export const deletePopup = new PopupConfirmation('.popup_type_delete', setSubmit
 
 deletePopup.setEventListeners();
 
+function handleDeleteCard() {
+  this._element.querySelector('.element__delete').addEventListener('click', ()=>
+  deletePopup.open(this._cardId, this._element));
+}
+
+// open(id, card){
+//   super.open();
+//   this._id = id;
+//   this._card = card; 
+// }
+
+// _deleteHandler(){
+//   this._element.remove();
+//   this._element = null;
+// }
+
 // ===================================================== попап редактирования аватара
 
 const editPhotoPopup = new PopupWithForm({
   popupSelector: '.popup_type_edit-photo', 
   formSelector: '.popup__content_avatar', 
   handleFormSubmit: (object) => {
+   changeButtonValue('.popup__content_avatar', 'Сохранение...')
    api.changeAvatar(object.avatar)
      .then(result => 
       userInfo.setUserInfo(result))
@@ -182,17 +183,11 @@ editPhotoPopup.setEventListeners();
 
 // ========= валидация ================================ //
 
-const params = {
-  formSelector: '.popup__content_edit',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
-  inactiveButtonClass: 'popup__save_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_active'
-}
-
-const formEditValidator = new FormValidator(params, document.querySelector('.popup__content_add'));
+const formEditValidator = new FormValidator(validationParams, popupAddForm);
 formEditValidator.enableValidation();
 
-const formAddValidator = new FormValidator(params, document.querySelector('.popup__content_edit'));
+const formAddValidator = new FormValidator(validationParams, popupEditForm);
 formAddValidator.enableValidation();
+
+const formChangeValidator = new FormValidator(validationParams, popupChangeForm);
+formChangeValidator.enableValidation();

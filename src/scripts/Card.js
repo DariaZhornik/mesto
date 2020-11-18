@@ -1,12 +1,12 @@
-import { Api } from './Api.js';
-import { deletePopup } from './index.js'
+import { deletePopup } from '../pages/index.js'
 
 export default class Card {
-    constructor(name, link, cardId, ownerId, userId, likes, handleCardClick, removeLikeFunction, addLikeFunction, selector) {
+    constructor(name, link, cardId, ownerId, userId, likes, handleCardClick, handleDeleteCard, removeLikeFunction, addLikeFunction, selector) {
         this._selector = selector;
 	    this._name = name;
         this._link = link;
         this._handleCardClick = handleCardClick;
+        this._handleDeleteCard = handleDeleteCard;
         this._addLikeFunction = addLikeFunction;
         this._removeLikeFunction = removeLikeFunction;
         this._cardId = cardId;

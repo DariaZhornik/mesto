@@ -1,9 +1,4 @@
-const ownerInfo  = {cohort: 'cohort-17', 
-                authorization: '7a56e95e-8f95-4549-9d80-3f9b7d7f6e6c',
-                url: 'https://mesto.nomoreparties.co/v1/cohort-17',
-                id: "d2778ebd6a7ba6bdd2ad4796"}
-
-class Api {
+export default class Api {
     constructor(ownerInfo) {
         this._cohort = ownerInfo.cohort;
         this._authorization = ownerInfo.authorization;
@@ -23,13 +18,6 @@ class Api {
             headers: {
                 authorization: this._authorization
             }
-        }).then((result) => this._checkResponse(result));
-    }
-
-    createNewCard(name, link) {
-        return fetch(this.url, {
-            headers: this.headers,
-            body: JSON.stringify({ name, link })
         }).then((result) => this._checkResponse(result));
     }
 
@@ -106,9 +94,3 @@ class Api {
 
 }
 
-
-// GET https://mesto.nomoreparties.co/v1/cohortId/users/me
-// Токен: 7a56e95e-8f95-4549-9d80-3f9b7d7f6e6c
-// Идентификатор группы: cohort-17
-
-export { ownerInfo, Api }
