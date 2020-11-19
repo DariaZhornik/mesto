@@ -1,15 +1,15 @@
 import '../pages/index.css';
-import Card from '../scripts/Card.js'
-import FormValidator from '../scripts/FormValidator.js' 
-import PopupWithForm from '../scripts/PopupWithForm.js'
-import PopupWithImage from '../scripts/PopupWithImage.js'
-import Section from '../scripts/Section.js'
-import UserInfo from '../scripts/UserInfo.js'
-import {addPopup} from '../utils/constants.js'
+import Card from '../components/Card.js'
+import FormValidator from '../components/FormValidator.js' 
+import PopupWithForm from '../components/PopupWithForm.js'
+import PopupWithImage from '../components/PopupWithImage.js'
+import Section from '../components/Section.js'
+import UserInfo from '../components/UserInfo.js'
+import PopupConfirmation from '../components/PopupConfirmation.js'
+import {addPopup, inputSelector, elementsSelector, photoPopupSelector, imageSelector, figCaptionSelector, addPopupFormSelector, addPopupSelector, editPopupFormSelector, editPopupSelector, editPhotoPopupFormSelector, editPhotoPopupSelector, deletePopupSelector, submitButton, popupTextJob, popupTextName, userName, userDescription, userAvatar } from '../utils/constants.js'
 import {avatarPopup} from '../utils/constants.js'
 import {editPopup} from '../utils/constants.js'
 import {ownerInfo} from '../utils/config.js'
-import Popup from '../scripts/Popup.js'
 import { validationParams } from '../utils/constants.js'
 import { popupAddForm } from '../utils/constants.js'
 import { popupEditForm } from '../utils/constants.js'
@@ -18,9 +18,8 @@ import { elementSelector } from '../utils/constants.js'
 import { addBtn } from '../utils/constants.js'
 import { editBtn } from '../utils/constants.js'
 import { profilePhoto } from '../utils/constants.js'
-import { changeButtonValue, setSubmitCallback } from '../utils/utils.js'
+import { changeButtonValue, setSubmitCallback, deleteCardCallback } from '../utils/utils.js'
 import {api} from '../utils/constants.js'
-
 
 Promise.all([
   api.getInitialCards(),
@@ -36,7 +35,7 @@ Promise.all([
   .catch(() => console.error('Ошибка'));
 
 
-const photoInputs = avatarPopup.querySelectorAll('.popup__input');
+const photoInputs = avatarPopup.querySelectorAll(inputSelector);
 profilePhoto.addEventListener('click', () => openEditPhotoPopup());
 function openEditPhotoPopup(){
   photoInputs.forEach(input => {
@@ -77,7 +76,7 @@ const createCard = (object, userData)  => {
     object.likes,
     userData._id, 
     handleCardClick, 
-    setSubmitCallback,
+    deleteCardCallback,
     removeLikeFunction, 
     addLikeFunction,
     elementSelector);
@@ -89,32 +88,37 @@ const cardList = new Section({
   renderer: (item) => {
     cardList.addItem(createCard(item).getElement());
   } 
-}, '.elements')
+}, elementsSelector)
 
 const imagePopup = new PopupWithImage({
-  popupSelector: ".popup_type_photo",
-  imageSelector: ".popup__image_type_photo",
-  figCaptionSelector: ".popup__title_type_photo"
+  popupSelector: photoPopupSelector,
+  imageSelector: imageSelector,
+  figCaptionSelector: figCaptionSelector
 })
 imagePopup.setEventListeners();
 
 // ================================================================ добавление карточек
 
+
 const popupWithFormAdd = new PopupWithForm({
-  popupSelector: '.popup_type_add',
-  formSelector: '.popup__content_add',
+  popupSelector: addPopupSelector,
+  formSelector: addPopupFormSelector,
   handleFormSubmit: (item) => {
-    changeButtonValue('.popup__content_add', 'Сохранение...')
-    api.addNewCard(item["place-name"], item["place-link"])
-      .then(result => {
-        cardList.addItem(createCard(result).getElement(), true);
-      })
+    changeButtonValue(addPopupFormSelector, 'Сохранение...')
+    Promise.all([
+      api.addNewCard(item["place-name"], item["place-link"]),
+      api.getUserInfo(),
+    ])
+      .then(([newCard, userData]) => {
+        cardList.addItem(createCard(newCard, userData).getElement(), true);
+        })
       .catch(() => console.error('Ошибка'))
-      .finally(() => changeButtonValue('.popup__content_add', 'Создать'));
+      .finally(() => changeButtonValue(addPopupFormSelector, 'Создать'));
   }
 })
 
-const addInputs = addPopup.querySelectorAll('.popup__input');
+
+const addInputs = addPopup.querySelectorAll(inputSelector);
 
 
 popupWithFormAdd.setEventListeners();
@@ -124,59 +128,59 @@ addBtn.addEventListener('click', () => {
     formAddValidator.hideInputError(input)
   })
   popupWithFormAdd.open();
-  document.querySelector('.popup__submit').setAttribute("disabled", true);
+  submitButton.setAttribute("disabled", true);
 });
 
 // ================================================================== форма для редактирования информации профиля
 
 const userInfoForm = new PopupWithForm({
-  popupSelector: '.popup_type_edit',
-  formSelector: '.popup__content_edit',
+  popupSelector: editPopupSelector,
+  formSelector: editPopupFormSelector,
   handleFormSubmit: (item) => {
-    changeButtonValue('.popup__content_edit', 'Сохранение...')
+    changeButtonValue(editPopupFormSelector, 'Сохранение...')
     api.changeUserInfo(item)
       .then(result =>
     userInfo.setUserInfo(result))
         .catch(() => console.error('Ошибка'))
-        .finally(() => changeButtonValue('.popup__content_edit', 'Сохранить'));
+        .finally(() => changeButtonValue(editPopupFormSelector, 'Сохранить'));
   }
 })
 
 const userInfo = new UserInfo({
-  name: document.querySelector('.profile__title'),
-  description: document.querySelector('.profile__subtitle'),
-  avatar: document.querySelector('.profile__image')
+  name: userName,
+  description: userDescription,
+  avatar: userAvatar
 })
 
 
-const userInfoInputs = editPopup.querySelectorAll('.popup__input')
+const userInfoInputs = editPopup.querySelectorAll(inputSelector)
 userInfoForm.setEventListeners();
 editBtn.addEventListener('click', () => {
   userInfoInputs.forEach(input => {
     formEditValidator.hideInputError(input)
   })
   userInfoForm.open();
-  document.querySelector('.popup__text_name').value = userInfo.getUserInfo().name;
-  document.querySelector('.popup__text_job').value = userInfo.getUserInfo().description;
+  popupTextName.value = userInfo.getUserInfo().name;
+  popupTextJob.value = userInfo.getUserInfo().description;
 })
 
 // ===================================================== попап удаления 
 
-export const deletePopup = new Popup('.popup_type_delete');
+export const deletePopup = new PopupConfirmation(deletePopupSelector);
 deletePopup.setEventListeners();
 
 // ===================================================== попап редактирования аватара
 
 const editPhotoPopup = new PopupWithForm({
-  popupSelector: '.popup_type_edit-photo', 
-  formSelector: '.popup__content_avatar', 
+  popupSelector: editPhotoPopupSelector, 
+  formSelector: editPhotoPopupFormSelector, 
   handleFormSubmit: (object) => {
-   changeButtonValue('.popup__content_avatar', 'Сохранение...')
+   changeButtonValue(editPhotoPopupFormSelector, 'Сохранение...')
    api.changeAvatar(object.avatar)
      .then(result => 
       userInfo.setUserInfo(result))
       .catch(() => console.error('Ошибка'))
-      .finally(() => changeButtonValue('.popup__content_avatar', 'Сохранить'));
+      .finally(() => changeButtonValue(editPhotoPopupFormSelector, 'Сохранить'));
   }});
 
 editPhotoPopup.setEventListeners();
