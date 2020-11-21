@@ -1,12 +1,12 @@
 export default class Card {
-    constructor(name, link, cardId, ownerId, likes, userId, handleCardClick, deleteCardCallback, removeLikeFunction, addLikeFunction, selector) {
+    constructor(name, link, cardId, ownerId, likes, userId, handleCardClick, handleDeleteButtonClick, removeLikeFunction, addLikeFunction, selector) {
         this._selector = selector;
 	    this._name = name;
         this._link = link;
         this._handleCardClick = handleCardClick;
         this._addLikeFunction = addLikeFunction;
         this._removeLikeFunction = removeLikeFunction;
-        this._deleteCardCallback = deleteCardCallback;
+        this._handleDeleteButtonClick = handleDeleteButtonClick;
         this._cardId = cardId;
         this._ownerId = ownerId;
         this._userId = userId; 
@@ -21,7 +21,7 @@ export default class Card {
         .cloneNode(true)    
     }
 
-    _deleteHandler(){
+    deleteHandler(){
         this._element.remove();
         this._element = null;
     }
@@ -32,9 +32,13 @@ export default class Card {
         if (this._checkId()) {
             this._element.querySelector('.element__delete').classList.add('element__delete_visible');
             this._element.querySelector('.element__delete').addEventListener('click', ()=>
-            this._deleteCardCallback(this._cardId, this._element));
+            this._handleDeleteButtonClick(this));
         }
         this._image.addEventListener('click', ()=>this._handleCardClick(this._name, this._link));
+    }
+
+    id(){
+        return this._cardId;
     }
 
     _changeLikeState(){

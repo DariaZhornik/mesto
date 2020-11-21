@@ -18,7 +18,7 @@ import { elementSelector } from '../utils/constants.js'
 import { addBtn } from '../utils/constants.js'
 import { editBtn } from '../utils/constants.js'
 import { profilePhoto } from '../utils/constants.js'
-import { changeButtonValue, setSubmitCallback, deleteCardCallback } from '../utils/utils.js'
+import { changeButtonValue } from '../utils/utils.js'
 import {api} from '../utils/constants.js'
 
 Promise.all([
@@ -52,6 +52,19 @@ function removeLikeFunction(id){
     .catch(() => console.error('Ошибка'));
 }
 
+function handleDeleteButtonClick(card) {
+  deletePopup.open();
+  deletePopup.setConfirmation(() => {
+    api.deleteCard(card.id())
+    .then(() => {
+        card.deleteHandler();
+        deletePopup.close();
+    })
+    .catch(() => console.error('Ошибка'));
+  })
+}
+
+
 function addLikeFunction(id){
   api.addLike(id)
   .then((data) => {
@@ -76,7 +89,7 @@ const createCard = (object, userData)  => {
     object.likes,
     userData._id, 
     handleCardClick, 
-    deleteCardCallback,
+    handleDeleteButtonClick,
     removeLikeFunction, 
     addLikeFunction,
     elementSelector);
